@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gymnotes/models/application_models.dart';
+import 'package:gymnotes/ui/dumb_widgets/custom_app_bar.dart';
+import 'package:gymnotes/ui/dumb_widgets/responsive_card.dart';
+import 'package:gymnotes/ui/dumb_widgets/rounded_button.dart';
+import 'package:gymnotes/ui/shared/styles.dart';
 import 'package:gymnotes/ui/shared/ui_helpers.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
@@ -43,49 +47,110 @@ class EditExerciseView extends StatelessWidget with $EditExerciseView {
       onModelReady: (viewModel) => listenToFormUpdated(viewModel),
       onDispose: (_) => disposeForm(),
       builder: ((context, viewModel, child) {
-        // nameController.text = exercise.name;
-        // weightIncrementController.text = exercise.weightIncrement.toString();
-        // machineSettingsController.text = exercise.machineSettings ?? '';
-        // defaultNumberOfSetsController.text =
-        //     exercise.defaultNumberOfSets.toString();
-        // viewModel.setUnit(exercise.unit ?? 'kg');
-
         return Scaffold(
-          appBar: AppBar(
-            title: const Text('Edit Exercise'),
-          ),
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0),
+          appBar: getAppBar('Edit Exercise', []),
+          body: ResponsiveCard(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const Text(
+                  'Edit your presets for this Exercise',
+                  style: TextStyle(
+                    color: kcMediumGreyColor,
+                  ),
+                ),
                 vSpaceRegular,
-                const Text('Edit your presets for this Exercise'),
-                vSpaceRegular,
+                const Text(
+                  'Name',
+                  style: TextStyle(
+                    color: kcForegroundColor,
+                  ),
+                ),
+                vSpaceTiny,
                 TextFormField(
                   initialValue: exercise.name,
                   onChanged: (value) {
                     nameController.text = value.trim();
                   },
                   decoration: const InputDecoration(
-                    labelText: 'Name',
+                    contentPadding: EdgeInsets.all(10),
+                    fillColor: Colors.white10,
+                    filled: true,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Colors.transparent
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Colors.transparent
+                      ),
+                    ),
                   ),
+                  style: const TextStyle(
+                    fontSize: 20,
+                    color: kcForegroundColor,
+                  ),
+                  cursorColor: kcPrimaryColor,
+
                 ),
                 vSpaceRegular,
+                const Text(
+                  'Weight Increment',
+                  style: TextStyle(
+                    color: kcForegroundColor
+                  ),
+                ),
+                vSpaceTiny,
                 TextFormField(
                   initialValue: exercise.weightIncrement.toString(),
                   onChanged: (value) {
                     weightIncrementController.text = value.trim();
                   },
                   keyboardType: TextInputType.number,
+
                   decoration: const InputDecoration(
-                    labelText: 'Weight Increment',
+                    contentPadding: EdgeInsets.all(10),
+                    fillColor: Colors.white10,
+                    filled: true,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Colors.transparent
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Colors.transparent
+                      ),
+                    ),
                   ),
+                  style: const TextStyle(
+                    fontSize: 20,
+                    color: kcForegroundColor,
+                  ),
+                  cursorColor: kcPrimaryColor,
                 ),
                 vSpaceRegular,
                 DropdownButtonFormField(
                   decoration: const InputDecoration(
-                    labelText: 'Unit',
+                    contentPadding: EdgeInsets.all(10),
+                    fillColor: Colors.white10,
+                    filled: true,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Colors.transparent
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Colors.transparent
+                      ),
+                    ),
                   ),
+                  style: const TextStyle(
+                    color: kcForegroundColor,
+                  ),
+                  dropdownColor: const Color(0xFF323137),
                   value: viewModel.unitValue,
                   items: const [
                     DropdownMenuItem(
@@ -100,6 +165,13 @@ class EditExerciseView extends StatelessWidget with $EditExerciseView {
                   onChanged: (String? value) => viewModel.setUnit(value!),
                 ),
                 vSpaceRegular,
+                const Text(
+                  'Machine Settings',
+                  style: TextStyle(
+                    color: kcForegroundColor,
+                  ),
+                ),
+                vSpaceTiny,
                 TextFormField(
                   initialValue: exercise.machineSettings,
                   onChanged: (value) {
@@ -107,21 +179,64 @@ class EditExerciseView extends StatelessWidget with $EditExerciseView {
                   },
                   maxLines: 3,
                   decoration: const InputDecoration(
-                    labelText: 'Machine Settings',
+                    contentPadding: EdgeInsets.all(10),
+                    fillColor: Colors.white10,
+                    filled: true,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Colors.transparent
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Colors.transparent
+                      ),
+                    ),
                   ),
+                  style: const TextStyle(
+                    fontSize: 20,
+                    color: kcForegroundColor,
+                  ),
+                  cursorColor: kcPrimaryColor,
+
                 ),
                 vSpaceRegular,
+                const Text(
+                  'Default Number of Sets',
+                  style: TextStyle(
+                    color: kcForegroundColor
+                  ),
+                ),
+                vSpaceTiny,
                 TextFormField(
                   initialValue: exercise.defaultNumberOfSets.toString(),
                   onChanged: (value) {
                     defaultNumberOfSetsController.text = value.trim();
                   },
+                  keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
-                    labelText: 'Default Number of Sets',
+                    contentPadding: EdgeInsets.all(10),
+                    fillColor: Colors.white10,
+                    filled: true,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Colors.transparent
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Colors.transparent
+                      ),
+                    ),
                   ),
+                  style: const TextStyle(
+                    fontSize: 20,
+                    color: kcForegroundColor,
+                  ),
+                  cursorColor: kcPrimaryColor,
                 ),
                 vSpaceRegular,
-                ElevatedButton(
+                RoundedButton(
                   onPressed: () => viewModel.save(),
                   child: const Text('Add'),
                 ),
