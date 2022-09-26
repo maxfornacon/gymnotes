@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gymnotes/models/application_models.dart';
+import 'package:gymnotes/ui/dumb_widgets/custom_app_bar.dart';
+import 'package:gymnotes/ui/dumb_widgets/responsive_card.dart';
+import 'package:gymnotes/ui/dumb_widgets/rounded_box.dart';
+import 'package:gymnotes/ui/dumb_widgets/rounded_button.dart';
 import 'package:gymnotes/ui/plans/plans_viewModel.dart';
+import 'package:gymnotes/ui/shared/styles.dart';
 import 'package:gymnotes/ui/shared/ui_helpers.dart';
 import 'package:stacked/stacked.dart';
 
@@ -14,20 +19,26 @@ class PlansView extends StatelessWidget {
       onModelReady: (model) => model.initialise(),
       builder: (context, viewModel, child) {
         return Scaffold(
-          appBar: AppBar(
-            title: const Text('Plans'),
-            actions: [
+          appBar: getAppBar(
+            'Plans',
+            [
               IconButton(
                 onPressed: () => viewModel.navigateToCreatePlan(),
                 icon: const Icon(Icons.add),
               ),
             ],
+
           ),
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0),
+          body: ResponsiveCard(
             child: Column(
               children: [
                 const SizedBox(width: double.infinity,),
+                RoundedButton(
+                  onPressed: () => viewModel.navigateToCreatePlan(),
+                  child: const Text(
+                    'Create new plan',
+                  ),
+                ),
                 if (!viewModel.currentPlanIsSet)
                   Column(
                     children: const [
@@ -40,85 +51,85 @@ class PlansView extends StatelessWidget {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
+                      vSpaceSmall
                     ],
                   ),
-                vSpaceRegular,
+                if (viewModel.currentPlanIsSet) vSpaceRegular,
                 viewModel.initialising
                     ? const Center(
                         child: CircularProgressIndicator(),
                       )
-                    : ListView.builder(
+                    : ListView.separated(
                       shrinkWrap: true,
                       itemCount: viewModel.plans.length,
+                      separatorBuilder: (context, index) => vSpaceSmall,
                       itemBuilder: (context, index) {
                         TPlan plan = viewModel.plans[index];
                         return MouseRegion(
                           cursor: SystemMouseCursors.click,
                           child: GestureDetector(
                             onTap: () => viewModel.setPlanAsCurrent(plan),
-                            child: Card(
-                              color: plan.current ? Colors.blue.shade200 : Colors.white,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      plan.name,
-                                      style: const TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w600,
-                                      ),
+                            child: RoundedBox(
+                              border: plan.current ? true : false,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    plan.name,
+                                    style: const TextStyle(
+                                      color: kcForegroundColor,
+                                      fontSize: 20,
                                     ),
-                                    vSpaceRegular,
-                                    ListView.builder(
-                                      shrinkWrap: true,
-                                      itemCount: plan.workouts.length,
-                                      itemBuilder: (context, index) {
-                                        TWorkout workout = plan.workouts[index];
-                                        return Container(
-                                          padding: const EdgeInsets.all(8.0),
-                                          decoration: BoxDecoration(
-                                            border: Border.all(
-                                              color: Colors.black12,
-                                              width: 2
+                                  ),
+                                  vSpaceSmall,
+                                  ListView.separated(
+                                    shrinkWrap: true,
+                                    itemCount: plan.workouts.length,
+                                    separatorBuilder: (context, index) => vSpaceSmall,
+                                    itemBuilder: (context, index) {
+                                      TWorkout workout = plan.workouts[index];
+                                      return Container(
+                                        padding: const EdgeInsets.all(8.0),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white12,
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              workout.name,
+                                              style: const TextStyle(
+                                                fontSize: 18,
+                                                color: kcForegroundColor,
+                                                fontWeight: FontWeight.w600,
+                                              ),
                                             ),
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                workout.name,
-                                                style: const TextStyle(
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                              ),
-                                              vSpaceRegular,
-                                              ListView.builder(
-                                                shrinkWrap: true,
-                                                itemCount: workout.exercises.length,
-                                                itemBuilder: (context, index) {
-                                                  TExercise exercise = workout.exercises[index];
-                                                  return Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    children: [
-                                                      Text(
-                                                        exercise.name,
-
+                                            vSpaceTiny,
+                                            ListView.builder(
+                                              shrinkWrap: true,
+                                              itemCount: workout.exercises.length,
+                                              itemBuilder: (context, index) {
+                                                TExercise exercise = workout.exercises[index];
+                                                return Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      exercise.name,
+                                                      style: const TextStyle(
+                                                        color: kcForegroundColor,
                                                       ),
-                                                    ],
-                                                  );
-                                                },
-                                              ),
-                                            ],
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ],
-                                ),
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ],
                               ),
                             ),
                           ),

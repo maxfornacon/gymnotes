@@ -3,10 +3,12 @@ import 'package:gymnotes/ui/shared/styles.dart';
 
 class RoundedBox extends StatelessWidget {
   final Widget child;
+  final bool border;
 
   const RoundedBox({
     Key? key,
-    required this.child
+    required this.child,
+    this.border = false,
   }) : super(key: key);
 
   @override
@@ -14,6 +16,10 @@ class RoundedBox extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: kcSecondaryColor,
+        border: border ? Border.all(
+          color: kcPrimaryColor,
+          width: 2
+        ) : null,
         borderRadius: BorderRadius.circular(20.0),
       ),
       child: Padding(
