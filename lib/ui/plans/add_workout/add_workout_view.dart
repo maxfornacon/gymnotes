@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gymnotes/models/application_models.dart';
+import 'package:gymnotes/ui/dumb_widgets/custom_app_bar.dart';
+import 'package:gymnotes/ui/dumb_widgets/responsive_card.dart';
+import 'package:gymnotes/ui/dumb_widgets/rounded_button.dart';
 import 'package:gymnotes/ui/plans/add_workout/add_workout_viewmodel.dart';
 import 'package:gymnotes/ui/shared/styles.dart';
 import 'package:gymnotes/ui/shared/ui_helpers.dart';
@@ -24,31 +27,72 @@ class AddWorkoutView extends StatelessWidget with $AddWorkoutView {
       onModelReady: (viewModel) => listenToFormUpdated(viewModel),
       onDispose: (viewModel) => disposeForm(),
       builder: (context, viewModel, child) => Scaffold(
-        appBar: AppBar(
-          title: const Text('Add Workout'),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25.0),
+        appBar: getAppBar('Add Workout', []),
+        body: ResponsiveCard(
           child: Column(
             children: [
-              vSpaceRegular,
               TextField(
                 controller: nameController,
                 decoration: const InputDecoration(
-                  labelText: 'Name',
+                  hintText: 'Name',
+                  hintStyle: TextStyle(
+                    color: kcForegroundColor,
+                  ),
+                  contentPadding: EdgeInsets.all(10),
+                  fillColor: Colors.white10,
+                  filled: true,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: Colors.transparent
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: Colors.transparent
+                    ),
+                  ),
                 ),
+                style: const TextStyle(
+                  fontSize: 20,
+                  color: kcForegroundColor,
+                ),
+                cursorColor: kcPrimaryColor,
               ),
               vSpaceRegular,
               TextField(
                 controller: notesController,
                 decoration: const InputDecoration(
-                  labelText: 'Notes',
+                  hintText: 'Notes',
+                  hintStyle: TextStyle(
+                    color: kcForegroundColor,
+                  ),
+                  contentPadding: EdgeInsets.all(10),
+                  fillColor: Colors.white10,
+                  filled: true,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: Colors.transparent
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: Colors.transparent
+                    ),
+                  ),
                 ),
+                style: const TextStyle(
+                  fontSize: 20,
+                  color: kcForegroundColor,
+                ),
+                cursorColor: kcPrimaryColor,
               ),
               vSpaceRegular,
-              Text(
+              const Text(
                 'Exercises',
-                style: Theme.of(context).textTheme.headline6,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: kcForegroundColor,
+                ),
               ),
               vSpaceTiny,
               const Align(
@@ -56,6 +100,13 @@ class AddWorkoutView extends StatelessWidget with $AddWorkoutView {
                 child: Text(
                   'Drag and Drop to reorder exercises according to the order you want to do them in',
                   style: ktsMediumGreyBodyText,
+                ),
+              ),
+              vSpaceRegular,
+              RoundedButton(
+                onPressed: () => viewModel.selectExercises(),
+                child: const Text(
+                  'Add Exercise',
                 ),
               ),
               vSpaceRegular,
@@ -115,14 +166,9 @@ class AddWorkoutView extends StatelessWidget with $AddWorkoutView {
                   );
                 },
               ),
-              ElevatedButton(
-                onPressed: () => viewModel.selectExercises(),
-                child: const Text(
-                  'Add Exercise',
-                ),
-              ),
               vSpaceRegular,
-              ElevatedButton(
+              const Spacer(),
+              RoundedButton(
                 onPressed: () => viewModel.save(),
                 child: const Text('Add Workout'),
               ),
