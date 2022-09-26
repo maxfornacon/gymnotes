@@ -123,7 +123,7 @@ class DashboardView extends StatelessWidget {
                 ),
                 vSpaceRegular,
                 RoundedButton(
-                  'Start a new Workout',
+                  child: Text('Start a new Workout'),
                   onPressed: () => viewModel.startNewWorkout(),
                 ),
               ],

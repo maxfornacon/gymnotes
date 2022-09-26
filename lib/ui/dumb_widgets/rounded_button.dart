@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:gymnotes/ui/shared/styles.dart';
 
 class RoundedButton extends StatelessWidget {
-  final String text;
+  final Widget child;
   final void Function()? onPressed;
+  final BorderRadius borderRadius;
+  final double height;
 
-  const RoundedButton(
-      this.text, {
+  const RoundedButton({
     Key? key,
+    required this.child,
     this.onPressed,
+    this.borderRadius = const BorderRadius.all(Radius.circular(20.0)),
+    this.height = 50.0,
   }) : super(key: key);
 
   @override
@@ -17,21 +21,19 @@ class RoundedButton extends StatelessWidget {
       cursor: SystemMouseCursors.click,
       child: SizedBox(
         width: double.infinity,
-        height: 50,
+        height: height,
         child: Material(
           color: kcPrimaryColor,
-          borderRadius: BorderRadius.circular(20.0),
+          borderRadius: borderRadius,
+          textStyle: const TextStyle(
+            color: Colors.white70,
+          ),
           child: InkWell(
             onTap: onPressed,
-            borderRadius: BorderRadius.circular(20.0),
+            borderRadius: borderRadius,
             child: Align(
               alignment: Alignment.center,
-              child: Text(
-                text,
-                style: const TextStyle(
-                  color: Colors.white70,
-                ),
-              )
+              child: child
             )
           ),
         ),
