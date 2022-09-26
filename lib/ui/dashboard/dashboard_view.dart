@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_heatmap_calendar/flutter_heatmap_calendar.dart';
 import 'package:gymnotes/models/application_models.dart';
 import 'package:gymnotes/ui/dashboard/dashboard_viewmodel.dart';
+import 'package:gymnotes/ui/dumb_widgets/responsive_card.dart';
+import 'package:gymnotes/ui/dumb_widgets/rounded_box.dart';
+import 'package:gymnotes/ui/dumb_widgets/rounded_button.dart';
+import 'package:gymnotes/ui/shared/responsive.dart';
+import 'package:gymnotes/ui/shared/styles.dart';
 import 'package:gymnotes/ui/shared/ui_helpers.dart';
 import 'package:stacked/stacked.dart';
 
@@ -14,64 +20,82 @@ class DashboardView extends StatelessWidget {
       onModelReady: (model) async => await model.initialise(),
       builder: (context, viewModel, child) {
         return Scaffold(
-          appBar: AppBar(
-            title: const Text('Dashboard'),
-            actions: [
-              IconButton(
-                onPressed: () => viewModel.navigateToPlans(),
-                icon: const Icon(Icons.list_alt_rounded),
-                tooltip: 'Workout plans overview',
-              ),
-            ],
-          ),
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0),
+          // appBar: AppBar(
+          //   title: const Text('Dashboard'),
+          //   actions: [
+          //     IconButton(
+          //       onPressed: () => viewModel.navigateToPlans(),
+          //       icon: const Icon(Icons.list_alt_rounded),
+          //       tooltip: 'Workout plans overview',
+          //     ),
+          //   ],
+          // ),
+          body: ResponsiveCard(
             child: Column(
               children: [
                 const SizedBox(width: double.infinity,),
-
-                vSpaceRegular,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconButton(
                       onPressed: () => viewModel.previousDay(),
-                      icon: const Icon(Icons.arrow_back_ios)
+                      icon: const Icon(
+                        Icons.arrow_back_ios,
+                        color: kcForegroundColor,
+                      )
                     ),
                     Text(
-                      viewModel.selectedDayString
+                      viewModel.selectedDayString,
+                      style: const TextStyle(
+                        color: kcForegroundColor,
+                      )
                     ),
                     IconButton(
                       onPressed: () => viewModel.nextDay(),
-                      icon: const Icon(Icons.arrow_forward_ios)
+                      icon: const Icon(
+                        Icons.arrow_forward_ios,
+                        color: kcForegroundColor,
+                      )
                     ),
                   ],
                 ),
+                vSpaceRegular,
                 ListView.builder(
                   shrinkWrap: true,
                   itemCount: viewModel.selectedDayWorkouts.length,
                   itemBuilder: (context, index) {
                     Workout workout = viewModel.selectedDayWorkouts[index];
-                    return GestureDetector(
-                      onTap: () => viewModel.navigateToWorkout(workout),
-                      child: Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                    return MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: GestureDetector(
+                        onTap: () => viewModel.navigateToWorkout(workout),
+                        child: RoundedBox(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                workout.name,
-                                style: const TextStyle(
-                                  fontSize: 20
+                              Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  workout.name,
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    color: kcForegroundColor,
+                                  ),
                                 ),
                               ),
-                              const Divider(),
+                              const Divider(
+                                color: kcForegroundColor,
+                              ),
                               ListView.builder(
                                 shrinkWrap: true,
                                 itemCount: workout.exercises.length,
                                 itemBuilder: (context, index) {
-                                  return Text(workout.exercises[index].name);
+                                  return Text(
+                                    workout.exercises[index].name,
+                                    style: const TextStyle(
+                                      color: kcForegroundColor,
+                                    ),
+                                  );
                                 }
                               )
                             ],
@@ -82,9 +106,25 @@ class DashboardView extends StatelessWidget {
                   }
                 ),
                 vSpaceRegular,
-                ElevatedButton(
+                const Spacer(),
+                RoundedBox(
+                  child: HeatMap(
+                    datasets: viewModel.heatMapData,
+                    colorMode: ColorMode.color,
+                    textColor: kcForegroundColor,
+                    defaultColor: kcForegroundColor.withOpacity(0.2),
+                    showText: false,
+                    showColorTip: false,
+                    scrollable: true,
+                    colorsets: const {
+                      1: kcPrimaryColor,
+                    },
+                  )
+                ),
+                vSpaceRegular,
+                RoundedButton(
+                  'Start a new Workout',
                   onPressed: () => viewModel.startNewWorkout(),
-                  child: const Text('Start a new Workout')
                 ),
               ],
             ),

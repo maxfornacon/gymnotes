@@ -19,12 +19,16 @@ class DashboardViewModel extends BaseViewModel {
   List<Workout> workouts = [];
 
   List<Workout> selectedDayWorkouts = [];
+  Map<DateTime, int> heatMapData = {};
 
   Future<void> initialise() async {
 
     workouts = await workoutsService.getWorkouts();
     debugPrint(workouts.toString());
     getSelectedDayWorkouts();
+
+    heatMapData = getHeatmapData();
+
     initialized = true;
     notifyListeners();
   }
@@ -60,6 +64,20 @@ class DashboardViewModel extends BaseViewModel {
    List<Workout> workouts = await workoutsService.getWorkouts();
    workouts.sort((a, b) => a.date.compareTo(b.date));
    return workouts;
+  }
+
+  Map<DateTime, int> getHeatmapData() {
+    Map<DateTime, int> data = {};
+    workouts.forEach((workout) {
+      DateTime date = DateTime(workout.date.year, workout.date.month, workout.date.day);
+      if (data.containsKey(date)) {
+        data[date]= data[date]! + 1;
+      } else {
+        data[date] = 1;
+      }
+    });
+    print(data);
+    return data;
   }
 
   Future<TPlan> getCurrentPlan() async {

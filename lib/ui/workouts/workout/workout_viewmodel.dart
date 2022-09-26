@@ -61,6 +61,23 @@ class WorkoutViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  void deleteSet({required Exercise exercise, required Set set}) {
+    workoutsService.deleteSetFromExercise(
+      workoutId: workout.id,
+      exerciseId: exercise.id,
+      set: set,
+    );
+
+    exercises = exercises.map((e) {
+      if (e.id == exercise.id) {
+        return e.copyWith(sets: e.sets!.where((s) => s.id != set.id).toList());
+      }
+      return e;
+    }).toList();
+
+    notifyListeners();
+  }
+
   void decrementWeight(Exercise exercise) {
     double weight = double.parse(weightController.text);
     if (weight - exercise.weightIncrement >= 0) {

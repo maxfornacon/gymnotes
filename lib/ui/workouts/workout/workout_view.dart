@@ -229,6 +229,10 @@ class WorkoutView extends StatelessWidget {
                               ),
                             ],
                           ),
+                          trailing: IconButton(
+                            icon: const Icon(Icons.delete),
+                            onPressed: () => model.deleteSet(exercise: exercise, set: set),
+                          ),
                         );
                       },
                       separatorBuilder: (context, index) => const Divider(),

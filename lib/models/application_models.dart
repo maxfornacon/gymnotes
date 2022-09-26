@@ -180,18 +180,21 @@ class Exercise with _$Exercise {
     required List<Set>? sets,
   }) = _Exercise;
 
-  factory Exercise.fromDocument(DocumentSnapshot<Map<String, dynamic>> doc, QuerySnapshot<Map<String, dynamic>> setsSnapshot) =>
-      Exercise(
-        id: doc.id,
-        name: doc.data()!['name'],
-        index: doc.data()!['index'],
-        machineSettings: doc.data()!['machineSettings'],
-        weightIncrement: doc.data()!['weightIncrement'],
-        unit: doc.data()!['unit'],
-        defaultNumberOfSets: doc.data()!['defaultNumberOfSets'],
-        sets: setsSnapshot.docs.isEmpty ? []
-            : setsSnapshot.docs.map((setDoc) => Set.fromDocument(setDoc)).toList(),
-      );
+  factory Exercise.fromDocument(DocumentSnapshot<Map<String, dynamic>> doc, QuerySnapshot<Map<String, dynamic>> setsSnapshot) {
+    List<Set> sets = setsSnapshot.docs.isEmpty ? []
+        : setsSnapshot.docs.map((setDoc) => Set.fromDocument(setDoc)).toList();
+    sets.sort((a, b) => a.index.compareTo(b.index));
+    return Exercise(
+      id: doc.id,
+      name: doc.data()!['name'],
+      index: doc.data()!['index'],
+      machineSettings: doc.data()!['machineSettings'],
+      weightIncrement: doc.data()!['weightIncrement'],
+      unit: doc.data()!['unit'],
+      defaultNumberOfSets: doc.data()!['defaultNumberOfSets'],
+      sets: sets,
+    );
+  }
 
   factory Exercise.fromJson(Map<String, dynamic> json) =>
       _$ExerciseFromJson(json);

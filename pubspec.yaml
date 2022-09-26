@@ -20,7 +20,7 @@ dependencies:
   json_annotation: ^4.6.0
   universal_html: ^2.0.8
   shared_preferences: ^2.0.15
-
+  flutter_heatmap_calendar: ^1.0.4
 
 dev_dependencies:
   flutter_test:

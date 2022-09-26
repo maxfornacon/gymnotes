@@ -279,6 +279,34 @@ class FirestoreApi {
     }
   }
 
+  Future<void> deleteSet({
+    required String setId,
+    required String exerciseId,
+    required String workoutId
+  }) async {
+    log.i('setId: $setId');
+
+    User currentUser = locator<UserService>().currentUser;
+    try {
+      await usersCollection
+          .doc(currentUser.id)
+          .collection('workouts')
+          .doc(workoutId)
+          .collection('exercises')
+          .doc(exerciseId)
+          .collection('sets')
+          .doc(setId)
+          .delete();
+
+      log.v('set deleted');
+    } catch (e) {
+      throw FirestoreApiException(
+        message: 'Failed to delete set',
+        devDetails: e.toString(),
+      );
+    }
+  }
+
   Future<void> deleteWorkout({required String workoutId}) async {
     log.i('workoutId: $workoutId');
 
