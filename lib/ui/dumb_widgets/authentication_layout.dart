@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gymnotes/ui/dumb_widgets/responsive_card.dart';
+import 'package:gymnotes/ui/dumb_widgets/rounded_button.dart';
 
 import '../shared/styles.dart';
 import '../shared/ui_helpers.dart';
@@ -33,11 +35,9 @@ class AuthenticationLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 25.0),
+    return ResponsiveCard(
       child: ListView(
         children: [
-          if (onBackPressed == null) vSpaceLarge,
           if (onBackPressed != null) vSpaceRegular,
           if (onBackPressed != null) IconButton(
             padding: EdgeInsets.zero,
@@ -51,7 +51,8 @@ class AuthenticationLayout extends StatelessWidget {
           Text(
             title,
             style: const TextStyle(
-              fontSize: 34
+              fontSize: 34,
+              color: kcForegroundColor,
             )
           ),
           vSpaceSmall,
@@ -89,31 +90,19 @@ class AuthenticationLayout extends StatelessWidget {
             )
           ),
           if (validationMessage != null) vSpaceRegular,
-          MouseRegion(
-            cursor: SystemMouseCursors.click,
-            child: GestureDetector(
-              onTap: onMainButtonTapped,
-              child: Container(
-                width: double.infinity,
-                height: 50,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: kcPrimaryColor,
-                  borderRadius: BorderRadius.circular(8)
-                ),
-                child: busy
+          RoundedButton(
+            onPressed: onMainButtonTapped,
+            child: busy
                 ? const CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                  )
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+            )
                 : Text(
-                    mainButtonTitle,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: kBodyTextSize
-                    )
-                  ),
-              ),
+                mainButtonTitle,
+                style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: kBodyTextSize
+                )
             ),
           ),
           vSpaceRegular,
@@ -124,6 +113,9 @@ class AuthenticationLayout extends StatelessWidget {
               children: const [
                 Text(
                   'Don\'t have an account? ',
+                  style: TextStyle(
+                    color: kcForegroundColor
+                  ),
                 ),
                 hSpaceTiny,
                 MouseRegion(
