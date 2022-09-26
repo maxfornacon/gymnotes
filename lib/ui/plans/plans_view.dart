@@ -57,6 +57,7 @@ class PlansView extends StatelessWidget {
                           child: GestureDetector(
                             onTap: () => viewModel.setPlanAsCurrent(plan),
                             child: Card(
+                              color: plan.current ? Colors.blue.shade200 : Colors.white,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(

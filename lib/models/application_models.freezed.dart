@@ -1373,9 +1373,11 @@ Exercise _$ExerciseFromJson(Map<String, dynamic> json) {
 mixin _$Exercise {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get notes => throw _privateConstructorUsedError;
-  double get weightIncrement => throw _privateConstructorUsedError;
   int get index => throw _privateConstructorUsedError;
+  String get machineSettings => throw _privateConstructorUsedError;
+  double get weightIncrement => throw _privateConstructorUsedError;
+  String get unit => throw _privateConstructorUsedError;
+  int get defaultNumberOfSets => throw _privateConstructorUsedError;
   List<Set>? get sets => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -1391,9 +1393,11 @@ abstract class $ExerciseCopyWith<$Res> {
   $Res call(
       {String id,
       String name,
-      String notes,
-      double weightIncrement,
       int index,
+      String machineSettings,
+      double weightIncrement,
+      String unit,
+      int defaultNumberOfSets,
       List<Set>? sets});
 }
 
@@ -1409,9 +1413,11 @@ class _$ExerciseCopyWithImpl<$Res> implements $ExerciseCopyWith<$Res> {
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
-    Object? notes = freezed,
-    Object? weightIncrement = freezed,
     Object? index = freezed,
+    Object? machineSettings = freezed,
+    Object? weightIncrement = freezed,
+    Object? unit = freezed,
+    Object? defaultNumberOfSets = freezed,
     Object? sets = freezed,
   }) {
     return _then(_value.copyWith(
@@ -1423,17 +1429,25 @@ class _$ExerciseCopyWithImpl<$Res> implements $ExerciseCopyWith<$Res> {
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      notes: notes == freezed
-          ? _value.notes
-          : notes // ignore: cast_nullable_to_non_nullable
+      index: index == freezed
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
+      machineSettings: machineSettings == freezed
+          ? _value.machineSettings
+          : machineSettings // ignore: cast_nullable_to_non_nullable
               as String,
       weightIncrement: weightIncrement == freezed
           ? _value.weightIncrement
           : weightIncrement // ignore: cast_nullable_to_non_nullable
               as double,
-      index: index == freezed
-          ? _value.index
-          : index // ignore: cast_nullable_to_non_nullable
+      unit: unit == freezed
+          ? _value.unit
+          : unit // ignore: cast_nullable_to_non_nullable
+              as String,
+      defaultNumberOfSets: defaultNumberOfSets == freezed
+          ? _value.defaultNumberOfSets
+          : defaultNumberOfSets // ignore: cast_nullable_to_non_nullable
               as int,
       sets: sets == freezed
           ? _value.sets
@@ -1452,9 +1466,11 @@ abstract class _$$_ExerciseCopyWith<$Res> implements $ExerciseCopyWith<$Res> {
   $Res call(
       {String id,
       String name,
-      String notes,
-      double weightIncrement,
       int index,
+      String machineSettings,
+      double weightIncrement,
+      String unit,
+      int defaultNumberOfSets,
       List<Set>? sets});
 }
 
@@ -1472,9 +1488,11 @@ class __$$_ExerciseCopyWithImpl<$Res> extends _$ExerciseCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
-    Object? notes = freezed,
-    Object? weightIncrement = freezed,
     Object? index = freezed,
+    Object? machineSettings = freezed,
+    Object? weightIncrement = freezed,
+    Object? unit = freezed,
+    Object? defaultNumberOfSets = freezed,
     Object? sets = freezed,
   }) {
     return _then(_$_Exercise(
@@ -1486,17 +1504,25 @@ class __$$_ExerciseCopyWithImpl<$Res> extends _$ExerciseCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      notes: notes == freezed
-          ? _value.notes
-          : notes // ignore: cast_nullable_to_non_nullable
+      index: index == freezed
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
+      machineSettings: machineSettings == freezed
+          ? _value.machineSettings
+          : machineSettings // ignore: cast_nullable_to_non_nullable
               as String,
       weightIncrement: weightIncrement == freezed
           ? _value.weightIncrement
           : weightIncrement // ignore: cast_nullable_to_non_nullable
               as double,
-      index: index == freezed
-          ? _value.index
-          : index // ignore: cast_nullable_to_non_nullable
+      unit: unit == freezed
+          ? _value.unit
+          : unit // ignore: cast_nullable_to_non_nullable
+              as String,
+      defaultNumberOfSets: defaultNumberOfSets == freezed
+          ? _value.defaultNumberOfSets
+          : defaultNumberOfSets // ignore: cast_nullable_to_non_nullable
               as int,
       sets: sets == freezed
           ? _value._sets
@@ -1512,9 +1538,11 @@ class _$_Exercise implements _Exercise {
   _$_Exercise(
       {required this.id,
       required this.name,
-      required this.notes,
-      required this.weightIncrement,
       required this.index,
+      required this.machineSettings,
+      required this.weightIncrement,
+      required this.unit,
+      required this.defaultNumberOfSets,
       required final List<Set>? sets})
       : _sets = sets;
 
@@ -1526,11 +1554,15 @@ class _$_Exercise implements _Exercise {
   @override
   final String name;
   @override
-  final String notes;
+  final int index;
+  @override
+  final String machineSettings;
   @override
   final double weightIncrement;
   @override
-  final int index;
+  final String unit;
+  @override
+  final int defaultNumberOfSets;
   final List<Set>? _sets;
   @override
   List<Set>? get sets {
@@ -1542,7 +1574,7 @@ class _$_Exercise implements _Exercise {
 
   @override
   String toString() {
-    return 'Exercise(id: $id, name: $name, notes: $notes, weightIncrement: $weightIncrement, index: $index, sets: $sets)';
+    return 'Exercise(id: $id, name: $name, index: $index, machineSettings: $machineSettings, weightIncrement: $weightIncrement, unit: $unit, defaultNumberOfSets: $defaultNumberOfSets, sets: $sets)';
   }
 
   @override
@@ -1552,10 +1584,14 @@ class _$_Exercise implements _Exercise {
             other is _$_Exercise &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.notes, notes) &&
+            const DeepCollectionEquality().equals(other.index, index) &&
+            const DeepCollectionEquality()
+                .equals(other.machineSettings, machineSettings) &&
             const DeepCollectionEquality()
                 .equals(other.weightIncrement, weightIncrement) &&
-            const DeepCollectionEquality().equals(other.index, index) &&
+            const DeepCollectionEquality().equals(other.unit, unit) &&
+            const DeepCollectionEquality()
+                .equals(other.defaultNumberOfSets, defaultNumberOfSets) &&
             const DeepCollectionEquality().equals(other._sets, _sets));
   }
 
@@ -1565,9 +1601,11 @@ class _$_Exercise implements _Exercise {
       runtimeType,
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(notes),
-      const DeepCollectionEquality().hash(weightIncrement),
       const DeepCollectionEquality().hash(index),
+      const DeepCollectionEquality().hash(machineSettings),
+      const DeepCollectionEquality().hash(weightIncrement),
+      const DeepCollectionEquality().hash(unit),
+      const DeepCollectionEquality().hash(defaultNumberOfSets),
       const DeepCollectionEquality().hash(_sets));
 
   @JsonKey(ignore: true)
@@ -1587,9 +1625,11 @@ abstract class _Exercise implements Exercise {
   factory _Exercise(
       {required final String id,
       required final String name,
-      required final String notes,
-      required final double weightIncrement,
       required final int index,
+      required final String machineSettings,
+      required final double weightIncrement,
+      required final String unit,
+      required final int defaultNumberOfSets,
       required final List<Set>? sets}) = _$_Exercise;
 
   factory _Exercise.fromJson(Map<String, dynamic> json) = _$_Exercise.fromJson;
@@ -1599,11 +1639,15 @@ abstract class _Exercise implements Exercise {
   @override
   String get name;
   @override
-  String get notes;
+  int get index;
+  @override
+  String get machineSettings;
   @override
   double get weightIncrement;
   @override
-  int get index;
+  String get unit;
+  @override
+  int get defaultNumberOfSets;
   @override
   List<Set>? get sets;
   @override
@@ -1619,9 +1663,11 @@ ExerciseDto _$ExerciseDtoFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$ExerciseDto {
   String get name => throw _privateConstructorUsedError;
-  String get notes => throw _privateConstructorUsedError;
-  double get weightIncrement => throw _privateConstructorUsedError;
   int get index => throw _privateConstructorUsedError;
+  String get machineSettings => throw _privateConstructorUsedError;
+  double get weightIncrement => throw _privateConstructorUsedError;
+  String get unit => throw _privateConstructorUsedError;
+  int get defaultNumberOfSets => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -1634,7 +1680,13 @@ abstract class $ExerciseDtoCopyWith<$Res> {
   factory $ExerciseDtoCopyWith(
           ExerciseDto value, $Res Function(ExerciseDto) then) =
       _$ExerciseDtoCopyWithImpl<$Res>;
-  $Res call({String name, String notes, double weightIncrement, int index});
+  $Res call(
+      {String name,
+      int index,
+      String machineSettings,
+      double weightIncrement,
+      String unit,
+      int defaultNumberOfSets});
 }
 
 /// @nodoc
@@ -1648,26 +1700,36 @@ class _$ExerciseDtoCopyWithImpl<$Res> implements $ExerciseDtoCopyWith<$Res> {
   @override
   $Res call({
     Object? name = freezed,
-    Object? notes = freezed,
-    Object? weightIncrement = freezed,
     Object? index = freezed,
+    Object? machineSettings = freezed,
+    Object? weightIncrement = freezed,
+    Object? unit = freezed,
+    Object? defaultNumberOfSets = freezed,
   }) {
     return _then(_value.copyWith(
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      notes: notes == freezed
-          ? _value.notes
-          : notes // ignore: cast_nullable_to_non_nullable
+      index: index == freezed
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
+      machineSettings: machineSettings == freezed
+          ? _value.machineSettings
+          : machineSettings // ignore: cast_nullable_to_non_nullable
               as String,
       weightIncrement: weightIncrement == freezed
           ? _value.weightIncrement
           : weightIncrement // ignore: cast_nullable_to_non_nullable
               as double,
-      index: index == freezed
-          ? _value.index
-          : index // ignore: cast_nullable_to_non_nullable
+      unit: unit == freezed
+          ? _value.unit
+          : unit // ignore: cast_nullable_to_non_nullable
+              as String,
+      defaultNumberOfSets: defaultNumberOfSets == freezed
+          ? _value.defaultNumberOfSets
+          : defaultNumberOfSets // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -1680,7 +1742,13 @@ abstract class _$$_ExerciseDtoCopyWith<$Res>
           _$_ExerciseDto value, $Res Function(_$_ExerciseDto) then) =
       __$$_ExerciseDtoCopyWithImpl<$Res>;
   @override
-  $Res call({String name, String notes, double weightIncrement, int index});
+  $Res call(
+      {String name,
+      int index,
+      String machineSettings,
+      double weightIncrement,
+      String unit,
+      int defaultNumberOfSets});
 }
 
 /// @nodoc
@@ -1696,26 +1764,36 @@ class __$$_ExerciseDtoCopyWithImpl<$Res> extends _$ExerciseDtoCopyWithImpl<$Res>
   @override
   $Res call({
     Object? name = freezed,
-    Object? notes = freezed,
-    Object? weightIncrement = freezed,
     Object? index = freezed,
+    Object? machineSettings = freezed,
+    Object? weightIncrement = freezed,
+    Object? unit = freezed,
+    Object? defaultNumberOfSets = freezed,
   }) {
     return _then(_$_ExerciseDto(
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      notes: notes == freezed
-          ? _value.notes
-          : notes // ignore: cast_nullable_to_non_nullable
+      index: index == freezed
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
+      machineSettings: machineSettings == freezed
+          ? _value.machineSettings
+          : machineSettings // ignore: cast_nullable_to_non_nullable
               as String,
       weightIncrement: weightIncrement == freezed
           ? _value.weightIncrement
           : weightIncrement // ignore: cast_nullable_to_non_nullable
               as double,
-      index: index == freezed
-          ? _value.index
-          : index // ignore: cast_nullable_to_non_nullable
+      unit: unit == freezed
+          ? _value.unit
+          : unit // ignore: cast_nullable_to_non_nullable
+              as String,
+      defaultNumberOfSets: defaultNumberOfSets == freezed
+          ? _value.defaultNumberOfSets
+          : defaultNumberOfSets // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -1726,9 +1804,11 @@ class __$$_ExerciseDtoCopyWithImpl<$Res> extends _$ExerciseDtoCopyWithImpl<$Res>
 class _$_ExerciseDto implements _ExerciseDto {
   _$_ExerciseDto(
       {required this.name,
-      required this.notes,
+      required this.index,
+      required this.machineSettings,
       required this.weightIncrement,
-      required this.index});
+      required this.unit,
+      required this.defaultNumberOfSets});
 
   factory _$_ExerciseDto.fromJson(Map<String, dynamic> json) =>
       _$$_ExerciseDtoFromJson(json);
@@ -1736,15 +1816,19 @@ class _$_ExerciseDto implements _ExerciseDto {
   @override
   final String name;
   @override
-  final String notes;
+  final int index;
+  @override
+  final String machineSettings;
   @override
   final double weightIncrement;
   @override
-  final int index;
+  final String unit;
+  @override
+  final int defaultNumberOfSets;
 
   @override
   String toString() {
-    return 'ExerciseDto(name: $name, notes: $notes, weightIncrement: $weightIncrement, index: $index)';
+    return 'ExerciseDto(name: $name, index: $index, machineSettings: $machineSettings, weightIncrement: $weightIncrement, unit: $unit, defaultNumberOfSets: $defaultNumberOfSets)';
   }
 
   @override
@@ -1753,10 +1837,14 @@ class _$_ExerciseDto implements _ExerciseDto {
         (other.runtimeType == runtimeType &&
             other is _$_ExerciseDto &&
             const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.notes, notes) &&
+            const DeepCollectionEquality().equals(other.index, index) &&
+            const DeepCollectionEquality()
+                .equals(other.machineSettings, machineSettings) &&
             const DeepCollectionEquality()
                 .equals(other.weightIncrement, weightIncrement) &&
-            const DeepCollectionEquality().equals(other.index, index));
+            const DeepCollectionEquality().equals(other.unit, unit) &&
+            const DeepCollectionEquality()
+                .equals(other.defaultNumberOfSets, defaultNumberOfSets));
   }
 
   @JsonKey(ignore: true)
@@ -1764,9 +1852,11 @@ class _$_ExerciseDto implements _ExerciseDto {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(notes),
+      const DeepCollectionEquality().hash(index),
+      const DeepCollectionEquality().hash(machineSettings),
       const DeepCollectionEquality().hash(weightIncrement),
-      const DeepCollectionEquality().hash(index));
+      const DeepCollectionEquality().hash(unit),
+      const DeepCollectionEquality().hash(defaultNumberOfSets));
 
   @JsonKey(ignore: true)
   @override
@@ -1784,9 +1874,11 @@ class _$_ExerciseDto implements _ExerciseDto {
 abstract class _ExerciseDto implements ExerciseDto {
   factory _ExerciseDto(
       {required final String name,
-      required final String notes,
+      required final int index,
+      required final String machineSettings,
       required final double weightIncrement,
-      required final int index}) = _$_ExerciseDto;
+      required final String unit,
+      required final int defaultNumberOfSets}) = _$_ExerciseDto;
 
   factory _ExerciseDto.fromJson(Map<String, dynamic> json) =
       _$_ExerciseDto.fromJson;
@@ -1794,11 +1886,15 @@ abstract class _ExerciseDto implements ExerciseDto {
   @override
   String get name;
   @override
-  String get notes;
+  int get index;
+  @override
+  String get machineSettings;
   @override
   double get weightIncrement;
   @override
-  int get index;
+  String get unit;
+  @override
+  int get defaultNumberOfSets;
   @override
   @JsonKey(ignore: true)
   _$$_ExerciseDtoCopyWith<_$_ExerciseDto> get copyWith =>
@@ -1812,6 +1908,7 @@ Set _$SetFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Set {
   String get id => throw _privateConstructorUsedError;
+  int get index => throw _privateConstructorUsedError;
   int get reps => throw _privateConstructorUsedError;
   double get weight => throw _privateConstructorUsedError;
   bool get isDropset => throw _privateConstructorUsedError;
@@ -1825,7 +1922,7 @@ mixin _$Set {
 abstract class $SetCopyWith<$Res> {
   factory $SetCopyWith(Set value, $Res Function(Set) then) =
       _$SetCopyWithImpl<$Res>;
-  $Res call({String id, int reps, double weight, bool isDropset});
+  $Res call({String id, int index, int reps, double weight, bool isDropset});
 }
 
 /// @nodoc
@@ -1839,6 +1936,7 @@ class _$SetCopyWithImpl<$Res> implements $SetCopyWith<$Res> {
   @override
   $Res call({
     Object? id = freezed,
+    Object? index = freezed,
     Object? reps = freezed,
     Object? weight = freezed,
     Object? isDropset = freezed,
@@ -1848,6 +1946,10 @@ class _$SetCopyWithImpl<$Res> implements $SetCopyWith<$Res> {
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      index: index == freezed
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
       reps: reps == freezed
           ? _value.reps
           : reps // ignore: cast_nullable_to_non_nullable
@@ -1869,7 +1971,7 @@ abstract class _$$_SetCopyWith<$Res> implements $SetCopyWith<$Res> {
   factory _$$_SetCopyWith(_$_Set value, $Res Function(_$_Set) then) =
       __$$_SetCopyWithImpl<$Res>;
   @override
-  $Res call({String id, int reps, double weight, bool isDropset});
+  $Res call({String id, int index, int reps, double weight, bool isDropset});
 }
 
 /// @nodoc
@@ -1884,6 +1986,7 @@ class __$$_SetCopyWithImpl<$Res> extends _$SetCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
+    Object? index = freezed,
     Object? reps = freezed,
     Object? weight = freezed,
     Object? isDropset = freezed,
@@ -1893,6 +1996,10 @@ class __$$_SetCopyWithImpl<$Res> extends _$SetCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      index: index == freezed
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
       reps: reps == freezed
           ? _value.reps
           : reps // ignore: cast_nullable_to_non_nullable
@@ -1914,6 +2021,7 @@ class __$$_SetCopyWithImpl<$Res> extends _$SetCopyWithImpl<$Res>
 class _$_Set implements _Set {
   _$_Set(
       {required this.id,
+      required this.index,
       required this.reps,
       required this.weight,
       required this.isDropset});
@@ -1923,6 +2031,8 @@ class _$_Set implements _Set {
   @override
   final String id;
   @override
+  final int index;
+  @override
   final int reps;
   @override
   final double weight;
@@ -1931,7 +2041,7 @@ class _$_Set implements _Set {
 
   @override
   String toString() {
-    return 'Set(id: $id, reps: $reps, weight: $weight, isDropset: $isDropset)';
+    return 'Set(id: $id, index: $index, reps: $reps, weight: $weight, isDropset: $isDropset)';
   }
 
   @override
@@ -1940,6 +2050,7 @@ class _$_Set implements _Set {
         (other.runtimeType == runtimeType &&
             other is _$_Set &&
             const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality().equals(other.index, index) &&
             const DeepCollectionEquality().equals(other.reps, reps) &&
             const DeepCollectionEquality().equals(other.weight, weight) &&
             const DeepCollectionEquality().equals(other.isDropset, isDropset));
@@ -1950,6 +2061,7 @@ class _$_Set implements _Set {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(index),
       const DeepCollectionEquality().hash(reps),
       const DeepCollectionEquality().hash(weight),
       const DeepCollectionEquality().hash(isDropset));
@@ -1970,6 +2082,7 @@ class _$_Set implements _Set {
 abstract class _Set implements Set {
   factory _Set(
       {required final String id,
+      required final int index,
       required final int reps,
       required final double weight,
       required final bool isDropset}) = _$_Set;
@@ -1978,6 +2091,8 @@ abstract class _Set implements Set {
 
   @override
   String get id;
+  @override
+  int get index;
   @override
   int get reps;
   @override
@@ -1995,6 +2110,7 @@ SetDto _$SetDtoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$SetDto {
+  int get index => throw _privateConstructorUsedError;
   int get reps => throw _privateConstructorUsedError;
   double get weight => throw _privateConstructorUsedError;
   bool get isDropset => throw _privateConstructorUsedError;
@@ -2008,7 +2124,7 @@ mixin _$SetDto {
 abstract class $SetDtoCopyWith<$Res> {
   factory $SetDtoCopyWith(SetDto value, $Res Function(SetDto) then) =
       _$SetDtoCopyWithImpl<$Res>;
-  $Res call({int reps, double weight, bool isDropset});
+  $Res call({int index, int reps, double weight, bool isDropset});
 }
 
 /// @nodoc
@@ -2021,11 +2137,16 @@ class _$SetDtoCopyWithImpl<$Res> implements $SetDtoCopyWith<$Res> {
 
   @override
   $Res call({
+    Object? index = freezed,
     Object? reps = freezed,
     Object? weight = freezed,
     Object? isDropset = freezed,
   }) {
     return _then(_value.copyWith(
+      index: index == freezed
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
       reps: reps == freezed
           ? _value.reps
           : reps // ignore: cast_nullable_to_non_nullable
@@ -2047,7 +2168,7 @@ abstract class _$$_SetDtoCopyWith<$Res> implements $SetDtoCopyWith<$Res> {
   factory _$$_SetDtoCopyWith(_$_SetDto value, $Res Function(_$_SetDto) then) =
       __$$_SetDtoCopyWithImpl<$Res>;
   @override
-  $Res call({int reps, double weight, bool isDropset});
+  $Res call({int index, int reps, double weight, bool isDropset});
 }
 
 /// @nodoc
@@ -2061,11 +2182,16 @@ class __$$_SetDtoCopyWithImpl<$Res> extends _$SetDtoCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? index = freezed,
     Object? reps = freezed,
     Object? weight = freezed,
     Object? isDropset = freezed,
   }) {
     return _then(_$_SetDto(
+      index: index == freezed
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
       reps: reps == freezed
           ? _value.reps
           : reps // ignore: cast_nullable_to_non_nullable
@@ -2086,11 +2212,16 @@ class __$$_SetDtoCopyWithImpl<$Res> extends _$SetDtoCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_SetDto implements _SetDto {
   _$_SetDto(
-      {required this.reps, required this.weight, required this.isDropset});
+      {required this.index,
+      required this.reps,
+      required this.weight,
+      required this.isDropset});
 
   factory _$_SetDto.fromJson(Map<String, dynamic> json) =>
       _$$_SetDtoFromJson(json);
 
+  @override
+  final int index;
   @override
   final int reps;
   @override
@@ -2100,7 +2231,7 @@ class _$_SetDto implements _SetDto {
 
   @override
   String toString() {
-    return 'SetDto(reps: $reps, weight: $weight, isDropset: $isDropset)';
+    return 'SetDto(index: $index, reps: $reps, weight: $weight, isDropset: $isDropset)';
   }
 
   @override
@@ -2108,6 +2239,7 @@ class _$_SetDto implements _SetDto {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SetDto &&
+            const DeepCollectionEquality().equals(other.index, index) &&
             const DeepCollectionEquality().equals(other.reps, reps) &&
             const DeepCollectionEquality().equals(other.weight, weight) &&
             const DeepCollectionEquality().equals(other.isDropset, isDropset));
@@ -2117,6 +2249,7 @@ class _$_SetDto implements _SetDto {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(index),
       const DeepCollectionEquality().hash(reps),
       const DeepCollectionEquality().hash(weight),
       const DeepCollectionEquality().hash(isDropset));
@@ -2136,12 +2269,15 @@ class _$_SetDto implements _SetDto {
 
 abstract class _SetDto implements SetDto {
   factory _SetDto(
-      {required final int reps,
+      {required final int index,
+      required final int reps,
       required final double weight,
       required final bool isDropset}) = _$_SetDto;
 
   factory _SetDto.fromJson(Map<String, dynamic> json) = _$_SetDto.fromJson;
 
+  @override
+  int get index;
   @override
   int get reps;
   @override

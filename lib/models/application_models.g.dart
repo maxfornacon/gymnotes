@@ -97,9 +97,11 @@ Map<String, dynamic> _$$_WorkoutDtoToJson(_$_WorkoutDto instance) =>
 _$_Exercise _$$_ExerciseFromJson(Map<String, dynamic> json) => _$_Exercise(
       id: json['id'] as String,
       name: json['name'] as String,
-      notes: json['notes'] as String,
-      weightIncrement: (json['weightIncrement'] as num).toDouble(),
       index: json['index'] as int,
+      machineSettings: json['machineSettings'] as String,
+      weightIncrement: (json['weightIncrement'] as num).toDouble(),
+      unit: json['unit'] as String,
+      defaultNumberOfSets: json['defaultNumberOfSets'] as int,
       sets: (json['sets'] as List<dynamic>?)
           ?.map((e) => Set.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -109,30 +111,37 @@ Map<String, dynamic> _$$_ExerciseToJson(_$_Exercise instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'notes': instance.notes,
-      'weightIncrement': instance.weightIncrement,
       'index': instance.index,
+      'machineSettings': instance.machineSettings,
+      'weightIncrement': instance.weightIncrement,
+      'unit': instance.unit,
+      'defaultNumberOfSets': instance.defaultNumberOfSets,
       'sets': instance.sets,
     };
 
 _$_ExerciseDto _$$_ExerciseDtoFromJson(Map<String, dynamic> json) =>
     _$_ExerciseDto(
       name: json['name'] as String,
-      notes: json['notes'] as String,
-      weightIncrement: (json['weightIncrement'] as num).toDouble(),
       index: json['index'] as int,
+      machineSettings: json['machineSettings'] as String,
+      weightIncrement: (json['weightIncrement'] as num).toDouble(),
+      unit: json['unit'] as String,
+      defaultNumberOfSets: json['defaultNumberOfSets'] as int,
     );
 
 Map<String, dynamic> _$$_ExerciseDtoToJson(_$_ExerciseDto instance) =>
     <String, dynamic>{
       'name': instance.name,
-      'notes': instance.notes,
-      'weightIncrement': instance.weightIncrement,
       'index': instance.index,
+      'machineSettings': instance.machineSettings,
+      'weightIncrement': instance.weightIncrement,
+      'unit': instance.unit,
+      'defaultNumberOfSets': instance.defaultNumberOfSets,
     };
 
 _$_Set _$$_SetFromJson(Map<String, dynamic> json) => _$_Set(
       id: json['id'] as String,
+      index: json['index'] as int,
       reps: json['reps'] as int,
       weight: (json['weight'] as num).toDouble(),
       isDropset: json['isDropset'] as bool,
@@ -140,18 +149,21 @@ _$_Set _$$_SetFromJson(Map<String, dynamic> json) => _$_Set(
 
 Map<String, dynamic> _$$_SetToJson(_$_Set instance) => <String, dynamic>{
       'id': instance.id,
+      'index': instance.index,
       'reps': instance.reps,
       'weight': instance.weight,
       'isDropset': instance.isDropset,
     };
 
 _$_SetDto _$$_SetDtoFromJson(Map<String, dynamic> json) => _$_SetDto(
+      index: json['index'] as int,
       reps: json['reps'] as int,
       weight: (json['weight'] as num).toDouble(),
       isDropset: json['isDropset'] as bool,
     );
 
 Map<String, dynamic> _$$_SetDtoToJson(_$_SetDto instance) => <String, dynamic>{
+      'index': instance.index,
       'reps': instance.reps,
       'weight': instance.weight,
       'isDropset': instance.isDropset,

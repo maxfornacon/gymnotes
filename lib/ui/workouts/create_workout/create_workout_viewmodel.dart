@@ -5,61 +5,38 @@ import 'package:gymnotes/services/workouts_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-import 'create_workout_view.form.dart';
 
-class CreateWorkoutViewModel extends FormViewModel {
+class CreateWorkoutViewModel extends BaseViewModel {
+
+  final TPlan plan;
+
+  CreateWorkoutViewModel({required this.plan});
 
   NavigationService navigationService = locator<NavigationService>();
   WorkoutsService workoutsService = locator<WorkoutsService>();
 
-  List<ExerciseDto> selectedExercises = [];
+  Future<void> selectWorkout(TWorkout tWorkout, DateTime date) async {
+    WorkoutDto workoutDto = WorkoutDto(
+      name: tWorkout.name,
+      notes: tWorkout.notes ?? '',
+      date: date,
+    );
 
-  @override
-  void setFormStatus() {
-    // TODO: implement setFormStatus
-  }
-
-  Future<void> selectExercises() async {
-    List<TExercise> templates = await navigationService.navigateTo(Routes.selectExercisesView);
-
-    for (var template in templates) {
-      ExerciseDto exercise = ExerciseDto(
-        name: template.name,
-        notes: '',
-        weightIncrement: 2.5,
-        index: selectedExercises.length + 1,
+    List<ExerciseDto> exerciseDtos = [];
+    for (TExercise tExercise in tWorkout.exercises) {
+      ExerciseDto exerciseDto = ExerciseDto(
+        name: tExercise.name,
+        index: tExercise.index!,
+        weightIncrement: tExercise.weightIncrement!,
+        defaultNumberOfSets: tExercise.defaultNumberOfSets!,
+        machineSettings: tExercise.machineSettings!,
+        unit: tExercise.unit!,
       );
-      selectedExercises.add(exercise);
-    }
-    notifyListeners();
-  }
-
-  void reorderExercises(int oldIndex, int newIndex) {
-    if (newIndex > oldIndex) {
-      newIndex -= 1;
+      exerciseDtos.add(exerciseDto);
     }
 
-    final ExerciseDto exercise = selectedExercises.removeAt(oldIndex);
-    selectedExercises.insert(newIndex, exercise);
-
-    for (var i = 0; i < selectedExercises.length; i++) {
-      selectedExercises[i] = selectedExercises[i].copyWith(index: i + 1);
-    }
-
-    notifyListeners();
+    Workout workout = await workoutsService.createWorkout(workout: workoutDto, exercises: exerciseDtos);
+    navigationService.replaceWith(Routes.workoutView, arguments: WorkoutViewArguments(workout: workout));
   }
 
-  Future<void> saveWorkout() async {
-    WorkoutDto workout = WorkoutDto(
-      date: DateTime.now(),
-      notes: '',
-      name: nameValue!,
-    );
-
-    await workoutsService.createWorkout(
-      workout: workout,
-      exercises: selectedExercises,
-    );
-    navigationService.back();
-  }
 }

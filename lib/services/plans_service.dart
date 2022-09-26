@@ -23,6 +23,11 @@ class PlansService {
     return plans;
   }
 
+  Future<TPlan> getCurrentPlan() async {
+    var plans = await getPlans();
+    return plans.firstWhere((element) => element.current);
+  }
+
   Future<TPlan> createPlan(TPlanDto planDto) async {
 
     print(planDto.toJson());

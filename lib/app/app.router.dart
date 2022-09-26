@@ -8,26 +8,24 @@
 import 'package:flutter/foundation.dart' as _i12;
 import 'package:flutter/material.dart';
 import 'package:gymnotes/models/application_models.dart' as _i13;
-import 'package:gymnotes/ui/create_account/create_account_view.dart' as _i5;
-import 'package:gymnotes/ui/dashboard/dashboard_view.dart' as _i7;
+import 'package:gymnotes/ui/create_account/create_account_view.dart' as _i4;
+import 'package:gymnotes/ui/dashboard/dashboard_view.dart' as _i6;
 import 'package:gymnotes/ui/login/login_view.dart' as _i2;
-import 'package:gymnotes/ui/plans/add_workout/add_workout_view.dart' as _i10;
-import 'package:gymnotes/ui/plans/create_plans/create_plan_view.dart' as _i9;
+import 'package:gymnotes/ui/plans/add_workout/add_workout_view.dart' as _i9;
+import 'package:gymnotes/ui/plans/create_plans/create_plan_view.dart' as _i8;
 import 'package:gymnotes/ui/plans/edit_exercise/edit_exercise_view.dart'
-    as _i11;
-import 'package:gymnotes/ui/plans/plans_view.dart' as _i8;
+    as _i10;
+import 'package:gymnotes/ui/plans/plans_view.dart' as _i7;
 import 'package:gymnotes/ui/plans/select_exersises/select_exercises_view.dart'
-    as _i6;
+    as _i5;
 import 'package:gymnotes/ui/workouts/create_workout/create_workout_view.dart'
-    as _i4;
-import 'package:gymnotes/ui/workouts/workouts_view.dart' as _i3;
+    as _i3;
+import 'package:gymnotes/ui/workouts/workout/workout_view.dart' as _i11;
 import 'package:stacked/stacked.dart' as _i1;
 import 'package:stacked_services/stacked_services.dart' as _i14;
 
 class Routes {
   static const loginView = '/';
-
-  static const workoutsView = '/workouts-view';
 
   static const createWorkoutView = '/create-workout-view';
 
@@ -45,9 +43,10 @@ class Routes {
 
   static const editExerciseView = '/edit-exercise-view';
 
+  static const workoutView = '/workout-view';
+
   static const all = <String>{
     loginView,
-    workoutsView,
     createWorkoutView,
     createAccountView,
     selectExercisesView,
@@ -56,6 +55,7 @@ class Routes {
     createPlanView,
     addWorkoutView,
     editExerciseView,
+    workoutView,
   };
 }
 
@@ -66,40 +66,40 @@ class StackedRouter extends _i1.RouterBase {
       page: _i2.LoginView,
     ),
     _i1.RouteDef(
-      Routes.workoutsView,
-      page: _i3.WorkoutsView,
-    ),
-    _i1.RouteDef(
       Routes.createWorkoutView,
-      page: _i4.CreateWorkoutView,
+      page: _i3.CreateWorkoutView,
     ),
     _i1.RouteDef(
       Routes.createAccountView,
-      page: _i5.CreateAccountView,
+      page: _i4.CreateAccountView,
     ),
     _i1.RouteDef(
       Routes.selectExercisesView,
-      page: _i6.SelectExercisesView,
+      page: _i5.SelectExercisesView,
     ),
     _i1.RouteDef(
       Routes.dashboardView,
-      page: _i7.DashboardView,
+      page: _i6.DashboardView,
     ),
     _i1.RouteDef(
       Routes.plansView,
-      page: _i8.PlansView,
+      page: _i7.PlansView,
     ),
     _i1.RouteDef(
       Routes.createPlanView,
-      page: _i9.CreatePlanView,
+      page: _i8.CreatePlanView,
     ),
     _i1.RouteDef(
       Routes.addWorkoutView,
-      page: _i10.AddWorkoutView,
+      page: _i9.AddWorkoutView,
     ),
     _i1.RouteDef(
       Routes.editExerciseView,
-      page: _i11.EditExerciseView,
+      page: _i10.EditExerciseView,
+    ),
+    _i1.RouteDef(
+      Routes.workoutView,
+      page: _i11.WorkoutView,
     ),
   ];
 
@@ -113,71 +113,72 @@ class StackedRouter extends _i1.RouterBase {
         settings: data,
       );
     },
-    _i3.WorkoutsView: (data) {
+    _i3.CreateWorkoutView: (data) {
+      final args = data.getArgs<CreateWorkoutViewArguments>(nullOk: false);
       return MaterialPageRoute<dynamic>(
-        builder: (context) => const _i3.WorkoutsView(),
+        builder: (context) => _i3.CreateWorkoutView(
+            key: args.key, plan: args.plan, date: args.date),
         settings: data,
       );
     },
-    _i4.CreateWorkoutView: (data) {
-      final args = data.getArgs<CreateWorkoutViewArguments>(
-        orElse: () => const CreateWorkoutViewArguments(),
-      );
-      return MaterialPageRoute<dynamic>(
-        builder: (context) => _i4.CreateWorkoutView(key: args.key),
-        settings: data,
-      );
-    },
-    _i5.CreateAccountView: (data) {
+    _i4.CreateAccountView: (data) {
       final args = data.getArgs<CreateAccountViewArguments>(
         orElse: () => const CreateAccountViewArguments(),
       );
       return MaterialPageRoute<dynamic>(
-        builder: (context) => _i5.CreateAccountView(key: args.key),
+        builder: (context) => _i4.CreateAccountView(key: args.key),
         settings: data,
       );
     },
-    _i6.SelectExercisesView: (data) {
+    _i5.SelectExercisesView: (data) {
       return MaterialPageRoute<dynamic>(
-        builder: (context) => const _i6.SelectExercisesView(),
+        builder: (context) => const _i5.SelectExercisesView(),
         settings: data,
       );
     },
-    _i7.DashboardView: (data) {
+    _i6.DashboardView: (data) {
       return MaterialPageRoute<dynamic>(
-        builder: (context) => const _i7.DashboardView(),
+        builder: (context) => const _i6.DashboardView(),
         settings: data,
       );
     },
-    _i8.PlansView: (data) {
+    _i7.PlansView: (data) {
       return MaterialPageRoute<dynamic>(
-        builder: (context) => const _i8.PlansView(),
+        builder: (context) => const _i7.PlansView(),
         settings: data,
       );
     },
-    _i9.CreatePlanView: (data) {
+    _i8.CreatePlanView: (data) {
       final args = data.getArgs<CreatePlanViewArguments>(
         orElse: () => const CreatePlanViewArguments(),
       );
       return MaterialPageRoute<dynamic>(
-        builder: (context) => _i9.CreatePlanView(key: args.key),
+        builder: (context) => _i8.CreatePlanView(key: args.key),
         settings: data,
       );
     },
-    _i10.AddWorkoutView: (data) {
+    _i9.AddWorkoutView: (data) {
       final args = data.getArgs<AddWorkoutViewArguments>(
         orElse: () => const AddWorkoutViewArguments(),
       );
       return MaterialPageRoute<dynamic>(
-        builder: (context) => _i10.AddWorkoutView(key: args.key),
+        builder: (context) => _i9.AddWorkoutView(key: args.key),
         settings: data,
       );
     },
-    _i11.EditExerciseView: (data) {
+    _i10.EditExerciseView: (data) {
       final args = data.getArgs<EditExerciseViewArguments>(nullOk: false);
       return MaterialPageRoute<dynamic>(
         builder: (context) =>
-            _i11.EditExerciseView(key: args.key, exercise: args.exercise),
+            _i10.EditExerciseView(key: args.key, exercise: args.exercise),
+        settings: data,
+      );
+    },
+    _i11.WorkoutView: (data) {
+      final args = data.getArgs<WorkoutViewArguments>(nullOk: false);
+      return MaterialPageRoute<dynamic>(
+        builder: (context) =>
+            _i11.WorkoutView(key: args.key, workout: args.workout),
         settings: data,
       );
     },
@@ -196,9 +197,17 @@ class LoginViewArguments {
 }
 
 class CreateWorkoutViewArguments {
-  const CreateWorkoutViewArguments({this.key});
+  const CreateWorkoutViewArguments({
+    this.key,
+    required this.plan,
+    required this.date,
+  });
 
   final _i12.Key? key;
+
+  final _i13.TPlan plan;
+
+  final DateTime date;
 }
 
 class CreateAccountViewArguments {
@@ -230,6 +239,17 @@ class EditExerciseViewArguments {
   final _i13.TExercise exercise;
 }
 
+class WorkoutViewArguments {
+  const WorkoutViewArguments({
+    this.key,
+    required this.workout,
+  });
+
+  final _i12.Key? key;
+
+  final _i13.Workout workout;
+}
+
 extension NavigatorStateExtension on _i14.NavigationService {
   Future<dynamic> navigateToLoginView({
     _i12.Key? key,
@@ -247,22 +267,10 @@ extension NavigatorStateExtension on _i14.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToWorkoutsView([
-    int? routerId,
-    bool preventDuplicates = true,
-    Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
-  ]) async {
-    return navigateTo<dynamic>(Routes.workoutsView,
-        id: routerId,
-        preventDuplicates: preventDuplicates,
-        parameters: parameters,
-        transition: transition);
-  }
-
   Future<dynamic> navigateToCreateWorkoutView({
     _i12.Key? key,
+    required _i13.TPlan plan,
+    required DateTime date,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -270,7 +278,7 @@ extension NavigatorStateExtension on _i14.NavigationService {
         transition,
   }) async {
     return navigateTo<dynamic>(Routes.createWorkoutView,
-        arguments: CreateWorkoutViewArguments(key: key),
+        arguments: CreateWorkoutViewArguments(key: key, plan: plan, date: date),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -378,6 +386,23 @@ extension NavigatorStateExtension on _i14.NavigationService {
   }) async {
     return navigateTo<dynamic>(Routes.editExerciseView,
         arguments: EditExerciseViewArguments(key: key, exercise: exercise),
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> navigateToWorkoutView({
+    _i12.Key? key,
+    required _i13.Workout workout,
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo<dynamic>(Routes.workoutView,
+        arguments: WorkoutViewArguments(key: key, workout: workout),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

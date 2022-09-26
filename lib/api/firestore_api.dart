@@ -105,7 +105,16 @@ class FirestoreApi {
 
       List<Exercise> exercises = [];
       for (DocumentSnapshot exerciseSnapshot in exercisesQuerySnapshot.docs) {
-        exercises.add(Exercise.fromDocument(exerciseSnapshot as DocumentSnapshot<Map<String, dynamic>>));
+         QuerySnapshot<Map<String, dynamic>> setsSnapshot = await exerciseSnapshot.reference
+            .collection('sets')
+            .get();
+
+        exercises.add(
+          Exercise.fromDocument(
+            exerciseSnapshot as DocumentSnapshot<Map<String, dynamic>>,
+            setsSnapshot
+          )
+        );
       }
 
       return exercises;
@@ -231,6 +240,40 @@ class FirestoreApi {
     } catch (e) {
       throw FirestoreApiException(
         message: 'Failed to get planTemplates',
+        devDetails: e.toString(),
+      );
+    }
+  }
+
+  Future<Set> createSet({
+    required SetDto setDto,
+    required String exerciseId,
+    required String workoutId
+  }) async {
+    log.i('setDto: $setDto');
+
+    User currentUser = locator<UserService>().currentUser;
+    try {
+      DocumentReference documentReference = await usersCollection
+          .doc(currentUser.id)
+          .collection('workouts')
+          .doc(workoutId)
+          .collection('exercises')
+          .doc(exerciseId)
+          .collection('sets')
+          .add(setDto.toJson());
+
+      log.v('set created at ${documentReference.path}');
+      return Set(
+        id: documentReference.id,
+        index: setDto.index,
+        reps: setDto.reps,
+        weight: setDto.weight,
+        isDropset: setDto.isDropset,
+      );
+    } catch (e) {
+      throw FirestoreApiException(
+        message: 'Failed to create new set',
         devDetails: e.toString(),
       );
     }

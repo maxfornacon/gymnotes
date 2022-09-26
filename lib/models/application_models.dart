@@ -148,7 +148,7 @@ class Workout with _$Workout {
   factory Workout.fromJson(Map<String, dynamic> json) =>
       _$WorkoutFromJson(json);
 
-  static exercisesFromJson(List<dynamic?> listOfExercises) => listOfExercises.isEmpty ? []
+  static exercisesFromJson(List<dynamic> listOfExercises) => listOfExercises.isEmpty ? []
       : listOfExercises.map((item) => Exercise.fromJson(item)).toList();
 
 // static exercisesToJson(List<Exercise?> items) => items.isEmpty ? []
@@ -172,20 +172,25 @@ class Exercise with _$Exercise {
   factory Exercise({
     required String id,
     required String name,
-    required String notes,
-    required double weightIncrement,
     required int index,
+    required String machineSettings,
+    required double weightIncrement,
+    required String unit,
+    required int defaultNumberOfSets,
     required List<Set>? sets,
   }) = _Exercise;
 
-  factory Exercise.fromDocument(DocumentSnapshot<Map<String, dynamic>> doc) =>
+  factory Exercise.fromDocument(DocumentSnapshot<Map<String, dynamic>> doc, QuerySnapshot<Map<String, dynamic>> setsSnapshot) =>
       Exercise(
         id: doc.id,
         name: doc.data()!['name'],
-        notes: doc.data()!['notes'],
         index: doc.data()!['index'],
+        machineSettings: doc.data()!['machineSettings'],
         weightIncrement: doc.data()!['weightIncrement'],
-        sets: null,
+        unit: doc.data()!['unit'],
+        defaultNumberOfSets: doc.data()!['defaultNumberOfSets'],
+        sets: setsSnapshot.docs.isEmpty ? []
+            : setsSnapshot.docs.map((setDoc) => Set.fromDocument(setDoc)).toList(),
       );
 
   factory Exercise.fromJson(Map<String, dynamic> json) =>
@@ -196,9 +201,11 @@ class Exercise with _$Exercise {
 class ExerciseDto with _$ExerciseDto {
   factory ExerciseDto({
     required String name,
-    required String notes,
-    required double weightIncrement,
     required int index,
+    required String machineSettings,
+    required double weightIncrement,
+    required String unit,
+    required int defaultNumberOfSets,
   }) = _ExerciseDto;
 
   factory ExerciseDto.fromJson(Map<String, dynamic> json) =>
@@ -210,10 +217,20 @@ class ExerciseDto with _$ExerciseDto {
 class Set with _$Set {
   factory Set({
     required String id,
+    required int index,
     required int reps,
     required double weight,
     required bool isDropset,
   }) = _Set;
+
+  static Set fromDocument(DocumentSnapshot<Map<String, dynamic>> doc) =>
+      Set(
+        id: doc.id,
+        index: doc.data()!['index'],
+        reps: doc.data()!['reps'],
+        weight: doc.data()!['weight'],
+        isDropset: doc.data()!['isDropset'],
+      );
 
   factory Set.fromJson(Map<String, dynamic> json) => _$SetFromJson(json);
 }
@@ -221,6 +238,7 @@ class Set with _$Set {
 @freezed
 class SetDto with _$SetDto {
   factory SetDto({
+    required int index,
     required int reps,
     required double weight,
     required bool isDropset,

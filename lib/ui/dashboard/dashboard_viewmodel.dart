@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:gymnotes/app/app.locator.dart';
 import 'package:gymnotes/app/app.router.dart';
 import 'package:gymnotes/models/application_models.dart';
+import 'package:gymnotes/services/plans_service.dart';
 import 'package:gymnotes/services/workouts_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:intl/intl.dart';
@@ -12,6 +13,7 @@ class DashboardViewModel extends BaseViewModel {
 
   WorkoutsService workoutsService = locator<WorkoutsService>();
   NavigationService navigationService = locator<NavigationService>();
+  PlansService plansService = locator<PlansService>();
 
   DateTime selectedDay = DateTime.now();
   List<Workout> workouts = [];
@@ -43,7 +45,6 @@ class DashboardViewModel extends BaseViewModel {
 
   void getSelectedDayWorkouts() {
     selectedDayWorkouts = workouts.where((workout) => workout.date.day == selectedDay.day).toList();
-    debugPrint(selectedDayWorkouts.toString());
   }
 
   String get selectedDayString {
@@ -59,12 +60,31 @@ class DashboardViewModel extends BaseViewModel {
    return await workoutsService.getWorkouts();
   }
 
+  Future<TPlan> getCurrentPlan() async {
+    return await plansService.getCurrentPlan();
+  }
 
-  void navigateToWorkouts() {
-    navigationService.navigateTo(Routes.workoutsView);
+  Future<void> startNewWorkout() async {
+    await navigationService.navigateTo(
+      Routes.createWorkoutView,
+      arguments: CreateWorkoutViewArguments(
+        plan: await getCurrentPlan(),
+        date: selectedDay,
+      )
+    );
+    workouts = await getWorkouts();
+    getSelectedDayWorkouts();
+    notifyListeners();
   }
 
   void navigateToPlans() {
     navigationService.navigateTo(Routes.plansView);
+  }
+
+  Future<void> navigateToWorkout(Workout workout) async {
+    await navigationService.navigateTo(Routes.workoutView, arguments: WorkoutViewArguments(workout: workout));
+
+    getSelectedDayWorkouts();
+    notifyListeners();
   }
 }

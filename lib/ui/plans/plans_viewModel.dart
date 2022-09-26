@@ -29,6 +29,13 @@ class PlansViewModel extends BaseViewModel {
   }
 
   void setPlanAsCurrent(TPlan plan) async {
+    for (TPlan plan in plans) {
+      if (plan.current) {
+        TPlan updatedPlan = plan.copyWith(current: false);
+        await plansService.updatePlan(updatedPlan);
+      }
+    }
+
     TPlan updatedPlan = plan.copyWith(current: true);
     await plansService.updatePlan(updatedPlan);
     currentPlanIsSet = true;
