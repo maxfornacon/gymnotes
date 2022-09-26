@@ -39,7 +39,7 @@ class CreateAccountView extends StatelessWidget with $CreateAccountView {
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Full Name',
+                    'E-Mail',
                     style: TextStyle(
                       color: kcForegroundColor,
                     ),
