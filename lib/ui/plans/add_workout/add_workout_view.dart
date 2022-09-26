@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gymnotes/models/application_models.dart';
 import 'package:gymnotes/ui/dumb_widgets/custom_app_bar.dart';
 import 'package:gymnotes/ui/dumb_widgets/responsive_card.dart';
+import 'package:gymnotes/ui/dumb_widgets/rounded_box.dart';
 import 'package:gymnotes/ui/dumb_widgets/rounded_button.dart';
 import 'package:gymnotes/ui/plans/add_workout/add_workout_viewmodel.dart';
 import 'package:gymnotes/ui/shared/styles.dart';
@@ -98,7 +99,7 @@ class AddWorkoutView extends StatelessWidget with $AddWorkoutView {
               const Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Drag and Drop to reorder exercises according to the order you want to do them in',
+                  'Drag and Drop to reorder exercises according to the order you want to do them in.',
                   style: ktsMediumGreyBodyText,
                 ),
               ),
@@ -110,61 +111,94 @@ class AddWorkoutView extends StatelessWidget with $AddWorkoutView {
                 ),
               ),
               vSpaceRegular,
-              ReorderableListView.builder(
-                shrinkWrap: true,
-                itemCount: viewModel.selectedExercises.length,
-                onReorder: (oldIndex, newIndex) {
-                  viewModel.reorderExercises(oldIndex, newIndex);
-                },
-                itemBuilder: (context, index) {
-                  TExercise exercise = viewModel.selectedExercises[index];
-                  return ListTile(
-                    key: ValueKey(exercise),
-                    title: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(exercise.name),
-                        vSpaceTiny,
-                        Row(
-                          children: [
-                            Text('Unit: ${exercise.unit ?? 'kg'}', style: ktsMediumGreyBodyText.copyWith(fontSize: 12)),
-                            hSpaceSmall,
-                            Text('Weight Incr.: ${exercise.weightIncrement!}', style: ktsMediumGreyBodyText.copyWith(fontSize: 12)),
-                            hSpaceSmall,
-                            Text('Nr. Sets: ${exercise.defaultNumberOfSets!}', style: ktsMediumGreyBodyText.copyWith(fontSize: 12)),
-                          ],
-                        )
-                      ],
-                    ),
-                    leading: Container(
-                      width: 30,
-                      height: 30,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(40),
-                      ),
-                      child: Center(
-                        child: Text(
-                          exercise.index.toString(),
-                          style: const TextStyle(
-                            fontSize: 16,
+
+              Theme(
+                data: ThemeData(
+                  canvasColor: Colors.transparent,
+                ),
+                child: ReorderableListView.builder(
+                  shrinkWrap: true,
+                  itemCount: viewModel.selectedExercises.length,
+                  onReorder: (oldIndex, newIndex) {
+                    viewModel.reorderExercises(oldIndex, newIndex);
+                  },
+                  buildDefaultDragHandles: false,
+                  itemBuilder: (context, index) {
+                    TExercise exercise = viewModel.selectedExercises[index];
+                    return Container(
+                      padding: const EdgeInsets.only(bottom: 5.0),
+                      key: ValueKey(exercise),
+                      child: RoundedBox(
+                        child: ListTile(
+                          title: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                exercise.name,
+                                style: const TextStyle(
+                                  color: kcForegroundColor,
+                                ),
+                              ),
+                              vSpaceTiny,
+                              Wrap(
+                                children: [
+                                  Text('Unit: ${exercise.unit ?? 'kg'}', style: ktsMediumGreyBodyText.copyWith(fontSize: 12)),
+                                  hSpaceSmall,
+                                  Text('Weight Incr.: ${exercise.weightIncrement!}', style: ktsMediumGreyBodyText.copyWith(fontSize: 12)),
+                                  hSpaceSmall,
+                                  Text('Nr. Sets: ${exercise.defaultNumberOfSets!}', style: ktsMediumGreyBodyText.copyWith(fontSize: 12)),
+                                ],
+                              )
+                            ],
                           ),
-                        )
-                      )
-                    ),
-                    trailing: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                      child: IconButton(
-                        icon: const Icon(Icons.edit),
-                        splashRadius: 20,
-                        onPressed: () => viewModel.editExercise(exercise),
+                          leading: Container(
+                            width: 30,
+                            height: 30,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: kcForegroundColor,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(40),
+                            ),
+                            child: Center(
+                              child: Text(
+                                exercise.index.toString(),
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: kcForegroundColor,
+                                ),
+                              )
+                            )
+                          ),
+                          trailing: Padding(
+                            padding: const EdgeInsets.only(left: 25.0),
+                            child: ButtonBar(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                IconButton(
+                                  icon: const Icon(
+                                    Icons.edit,
+                                    color: kcForegroundColor,
+                                  ),
+                                  splashRadius: 20,
+                                  onPressed: () => viewModel.editExercise(exercise),
+                                ),
+                                ReorderableDragStartListener(
+                                  index: index,
+                                  child: const Icon(
+                                    Icons.drag_handle,
+                                    color: kcForegroundColor,
+                                  )
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
               vSpaceRegular,
               const Spacer(),
