@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gymnotes/models/application_models.dart';
 import 'package:gymnotes/ui/dumb_widgets/custom_app_bar.dart';
 import 'package:gymnotes/ui/dumb_widgets/responsive_card.dart';
+import 'package:gymnotes/ui/dumb_widgets/rounded_box.dart';
 import 'package:gymnotes/ui/dumb_widgets/rounded_button.dart';
 import 'package:gymnotes/ui/shared/styles.dart';
 import 'package:gymnotes/ui/shared/ui_helpers.dart';
@@ -80,34 +81,37 @@ class CreatePlanView extends StatelessWidget with $CreatePlanView {
                     color: kcForegroundColor,
                   ),
                 ),
-              ListView.builder(
+              ListView.separated(
                 shrinkWrap: true,
                 itemCount: model.workouts.length,
+                separatorBuilder: (context, index) => vSpaceSmall,
                 itemBuilder: (context, index) {
                   TWorkout workout = model.workouts[index];
-                  return Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            workout.name,
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                            )
-                          ),
-                          ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: workout.exercises.length,
-                            itemBuilder: (context, index) {
-                              TExercise exercise = workout.exercises[index];
-                              return Text(exercise.name);
-                            },
+                  return RoundedBox(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          workout.name,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            color: kcForegroundColor,
                           )
-                        ],
-                      ),
+                        ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: workout.exercises.length,
+                          itemBuilder: (context, index) {
+                            TExercise exercise = workout.exercises[index];
+                            return Text(
+                              exercise.name,
+                              style: const TextStyle(
+                                color: kcForegroundColor,
+                              )
+                            );
+                          },
+                        )
+                      ],
                     ),
                   );
                 }
