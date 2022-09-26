@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,6 +15,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  FirebaseFirestore.instance.enablePersistence(const PersistenceSettings(synchronizeTabs: true));
   setupLocator();
   runApp(const MyApp());
 }
@@ -41,7 +43,7 @@ class _MyAppState extends State<MyApp> {
 
           if (isDeferredNotNull) {
             debugPrint(">>> Add to HomeScreen prompt is ready.");
-            await showAddHomePageDialog(context);
+            await showAddHomePageDialog();
             prefs.setBool(isWebDialogShownKey, true);
           } else {
             debugPrint(">>> Add to HomeScreen prompt is not ready yet.");
@@ -51,47 +53,59 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-  Future<bool?> showAddHomePageDialog(BuildContext context) async {
-    return showDialog<bool>(
-      context: context,
-      builder: (context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          child: Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Center(
-                  child: Icon(
-                    Icons.add_circle,
-                    size: 70,
-                    color: Theme.of(context).primaryColor,
-                  )
-                ),
-                const SizedBox(height: 20.0),
-                const Text(
-                  'Add to Homepage',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
-                ),
-                const SizedBox(height: 20.0),
-                const Text(
-                  'Want to add this application to home screen?',
-                  style: TextStyle(fontSize: 16),
-                ),
-                const SizedBox(height: 20.0),
-                ElevatedButton(
-                    onPressed: () {
-                      js.context.callMethod("presentAddToHome");
-                      Navigator.pop(context, false);
-                    },
-                    child: const Text("Yes!"))
-              ],
-            ),
-          ),
-        );
-      },
+  Future<bool?> showAddHomePageDialog() async {
+    DialogService dialogService = locator<DialogService>();
+    var rersult = await dialogService.showDialog(
+      title: "Add to Home Screen",
+      description: 'Want to add this application to home screen?'
     );
+
+    if (rersult!.confirmed) {
+      js.context.callMethod("addToHomeScreen");
+    }
+
+    return rersult.confirmed;
+
+    // return showDialog<bool>(
+    //   context: context,
+    //   builder: (context) {
+    //     return Dialog(
+    //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+    //       child: Padding(
+    //         padding: const EdgeInsets.all(24.0),
+    //         child: Column(
+    //           mainAxisSize: MainAxisSize.min,
+    //           children: [
+    //             Center(
+    //               child: Icon(
+    //                 Icons.add_circle,
+    //                 size: 70,
+    //                 color: Theme.of(context).primaryColor,
+    //               )
+    //             ),
+    //             const SizedBox(height: 20.0),
+    //             const Text(
+    //               'Add to Homepage',
+    //               style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+    //             ),
+    //             const SizedBox(height: 20.0),
+    //             const Text(
+    //               'Want to add this application to home screen?',
+    //               style: TextStyle(fontSize: 16),
+    //             ),
+    //             const SizedBox(height: 20.0),
+    //             ElevatedButton(
+    //                 onPressed: () {
+    //                   js.context.callMethod("presentAddToHome");
+    //                   Navigator.pop(context, false);
+    //                 },
+    //                 child: const Text("Yes!"))
+    //           ],
+    //         ),
+    //       ),
+    //     );
+    //   },
+    // );
   }
 
   // This widget is the root of your application.

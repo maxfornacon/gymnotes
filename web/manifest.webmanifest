@@ -5,7 +5,7 @@
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "GymNotes is a web app for tracking your workouts and progress.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
