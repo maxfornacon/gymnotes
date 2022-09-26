@@ -278,4 +278,23 @@ class FirestoreApi {
       );
     }
   }
+
+  Future<void> deleteWorkout({required String workoutId}) async {
+    log.i('workoutId: $workoutId');
+
+    User currentUser = locator<UserService>().currentUser;
+
+    try {
+      await usersCollection
+          .doc(currentUser.id)
+          .collection('workouts')
+          .doc(workoutId)
+          .delete();
+    } catch (e) {
+      throw FirestoreApiException(
+        message: 'Failed to delete workout',
+        devDetails: e.toString(),
+      );
+    }
+  }
 }

@@ -21,6 +21,13 @@ class WorkoutView extends StatelessWidget {
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
           title: Text(workout.name),
+          actions: [
+            IconButton(
+              onPressed: () => model.deleteWorkout(),
+              icon: const Icon(Icons.delete),
+              tooltip: 'Delete workout',
+            ),
+          ],
         ),
         body: PageView.builder(
           controller: model.pageController,

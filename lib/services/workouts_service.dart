@@ -45,6 +45,10 @@ class WorkoutsService {
     );
   }
 
+  Future<void> deleteWorkout({required String workoutId}) async {
+    await _firestoreApi.deleteWorkout(workoutId: workoutId);
+  }
+
   Future<Set> addSetToExercise({
     required String workoutId,
     required String exerciseId,

@@ -8,6 +8,7 @@
 
 import 'package:stacked_core/stacked_core.dart';
 import 'package:stacked_firebase_auth/src/firebase_authentication_service.dart';
+import 'package:stacked_services/src/dialog/dialog_service.dart';
 import 'package:stacked_services/src/navigation/navigation_service.dart';
 import 'package:stacked_services/src/snackbar/snackbar_service.dart';
 
@@ -28,6 +29,7 @@ Future<void> setupLocator(
 // Register dependencies
   locator.registerLazySingleton(() => NavigationService());
   locator.registerLazySingleton(() => SnackbarService());
+  locator.registerLazySingleton(() => DialogService());
   locator.registerLazySingleton(() => UserService());
   locator.registerLazySingleton(() => FirestoreApi());
   locator.registerSingleton(FirebaseAuthenticationService());

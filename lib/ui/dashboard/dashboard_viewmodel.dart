@@ -57,7 +57,9 @@ class DashboardViewModel extends BaseViewModel {
   }
 
   Future<List<Workout>> getWorkouts() async {
-   return await workoutsService.getWorkouts();
+   List<Workout> workouts = await workoutsService.getWorkouts();
+   workouts.sort((a, b) => a.date.compareTo(b.date));
+   return workouts;
   }
 
   Future<TPlan> getCurrentPlan() async {
@@ -84,6 +86,7 @@ class DashboardViewModel extends BaseViewModel {
   Future<void> navigateToWorkout(Workout workout) async {
     await navigationService.navigateTo(Routes.workoutView, arguments: WorkoutViewArguments(workout: workout));
 
+    workouts = await getWorkouts();
     getSelectedDayWorkouts();
     notifyListeners();
   }

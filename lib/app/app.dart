@@ -36,6 +36,7 @@ import '../ui/startup/startup_view.dart';
   dependencies: [
     LazySingleton(classType: NavigationService),
     LazySingleton(classType: SnackbarService),
+    LazySingleton(classType: DialogService),
     LazySingleton(classType: UserService),
     LazySingleton(classType: FirestoreApi),
     Singleton(classType: FirebaseAuthenticationService),

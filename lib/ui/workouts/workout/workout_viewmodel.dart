@@ -3,6 +3,7 @@ import 'package:gymnotes/app/app.locator.dart';
 import 'package:gymnotes/models/application_models.dart';
 import 'package:gymnotes/services/workouts_service.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class WorkoutViewModel extends BaseViewModel {
   bool initialising = true;
@@ -14,6 +15,8 @@ class WorkoutViewModel extends BaseViewModel {
   final repsController = TextEditingController();
 
   WorkoutsService workoutsService = locator<WorkoutsService>();
+  DialogService dialogService = locator<DialogService>();
+  NavigationService navigationService = locator<NavigationService>();
 
   WorkoutViewModel({
     required this.workout
@@ -95,5 +98,23 @@ class WorkoutViewModel extends BaseViewModel {
     weightController.text = '0';
     repsController.text = '0';
     pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.ease);
+  }
+
+
+  void deleteWorkout() async {
+    DialogResponse? response = await dialogService.showDialog(
+      title: 'Delete Workout',
+      description: 'Are you sure you want to delete this workout?',
+      buttonTitle: 'Delete',
+      cancelTitle: 'Cancel',
+      dialogPlatform: DialogPlatform.Material,
+    );
+
+    if (response!.confirmed) {
+      await workoutsService.deleteWorkout(workoutId: workout.id);
+      navigationService.back();
+    }
+
+    // await workoutsService.deleteWorkout(workoutId: workout.id);
   }
 }
