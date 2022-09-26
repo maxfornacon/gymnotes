@@ -6,6 +6,7 @@ class RoundedButton extends StatelessWidget {
   final void Function()? onPressed;
   final BorderRadius borderRadius;
   final double height;
+  final Color color;
 
   const RoundedButton({
     Key? key,
@@ -13,6 +14,7 @@ class RoundedButton extends StatelessWidget {
     this.onPressed,
     this.borderRadius = const BorderRadius.all(Radius.circular(20.0)),
     this.height = 50.0,
+    this.color = kcPrimaryColor,
   }) : super(key: key);
 
   @override
@@ -23,7 +25,7 @@ class RoundedButton extends StatelessWidget {
         width: double.infinity,
         height: height,
         child: Material(
-          color: kcPrimaryColor,
+          color: color,
           borderRadius: borderRadius,
           textStyle: const TextStyle(
             color: Colors.white70,

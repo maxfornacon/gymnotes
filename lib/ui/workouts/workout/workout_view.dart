@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gymnotes/models/application_models.dart';
+import 'package:gymnotes/ui/dumb_widgets/custom_app_bar.dart';
 import 'package:gymnotes/ui/dumb_widgets/responsive_card.dart';
 import 'package:gymnotes/ui/dumb_widgets/rounded_box.dart';
 import 'package:gymnotes/ui/dumb_widgets/rounded_button.dart';
@@ -22,16 +23,16 @@ class WorkoutView extends StatelessWidget {
       viewModelBuilder: () => WorkoutViewModel(workout: workout),
       onModelReady: (model) => model.init(),
       builder: (context, model, child) => Scaffold(
-        appBar: AppBar(
-          title: Text(workout.name),
-          actions: [
-            IconButton(
-              onPressed: () => model.deleteWorkout(),
-              icon: const Icon(Icons.delete),
-              tooltip: 'Delete workout',
+        appBar: getAppBar(workout.name,  [
+          IconButton(
+            onPressed: () => model.deleteWorkout(),
+            icon: const Icon(
+              Icons.delete,
+              color: kcForegroundColor,
             ),
-          ],
-        ),
+            tooltip: 'Delete workout',
+          ),
+        ],),
         body: ResponsiveCard(
           child: PageView.builder(
             controller: model.pageController,
@@ -52,7 +53,6 @@ class WorkoutView extends StatelessWidget {
                       Text(
                         exercise.name,
                         style: const TextStyle(
-                          fontSize: 20,
                           color: kcForegroundColor,
                         ),
                       ),

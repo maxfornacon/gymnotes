@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_heatmap_calendar/flutter_heatmap_calendar.dart';
 import 'package:gymnotes/models/application_models.dart';
 import 'package:gymnotes/ui/dashboard/dashboard_viewmodel.dart';
+import 'package:gymnotes/ui/dumb_widgets/custom_app_bar.dart';
 import 'package:gymnotes/ui/dumb_widgets/responsive_card.dart';
 import 'package:gymnotes/ui/dumb_widgets/rounded_box.dart';
 import 'package:gymnotes/ui/dumb_widgets/rounded_button.dart';
@@ -20,16 +21,19 @@ class DashboardView extends StatelessWidget {
       onModelReady: (model) async => await model.initialise(),
       builder: (context, viewModel, child) {
         return Scaffold(
-          // appBar: AppBar(
-          //   title: const Text('Dashboard'),
-          //   actions: [
-          //     IconButton(
-          //       onPressed: () => viewModel.navigateToPlans(),
-          //       icon: const Icon(Icons.list_alt_rounded),
-          //       tooltip: 'Workout plans overview',
-          //     ),
-          //   ],
-          // ),
+          appBar: getAppBar(
+            'Dashboard',
+            [
+              IconButton(
+                onPressed: () => viewModel.navigateToPlans(),
+                icon: const Icon(
+                  Icons.list_alt_rounded,
+                  color: kcForegroundColor,
+                ),
+                tooltip: 'Workout plans overview',
+              ),
+            ]
+          ),
           body: ResponsiveCard(
             child: Column(
               children: [
@@ -60,9 +64,10 @@ class DashboardView extends StatelessWidget {
                   ],
                 ),
                 vSpaceRegular,
-                ListView.builder(
+                ListView.separated(
                   shrinkWrap: true,
                   itemCount: viewModel.selectedDayWorkouts.length,
+                  separatorBuilder: (context, index) => vSpaceSmall,
                   itemBuilder: (context, index) {
                     Workout workout = viewModel.selectedDayWorkouts[index];
                     return MouseRegion(
@@ -123,7 +128,7 @@ class DashboardView extends StatelessWidget {
                 ),
                 vSpaceRegular,
                 RoundedButton(
-                  child: Text('Start a new Workout'),
+                  child: const Text('Start a new Workout'),
                   onPressed: () => viewModel.startNewWorkout(),
                 ),
               ],

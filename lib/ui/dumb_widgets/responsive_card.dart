@@ -25,7 +25,11 @@ class ResponsiveCard extends StatelessWidget {
             ),
             margin: !Responsive.isMobile(context) ? const EdgeInsets.all(20.0) : null,
             child: Padding(
-              padding: const EdgeInsets.all(25.0),
+              padding: Responsive.isMobile(context) ? const EdgeInsets.only(
+                left: 25.0,
+                right: 25.0,
+                bottom: 25.0,
+              ) : const EdgeInsets.all(25.0),
               child: child,
             )
           )
